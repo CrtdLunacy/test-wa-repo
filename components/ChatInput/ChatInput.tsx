@@ -9,7 +9,7 @@ import styles from './ChatInput.module.scss'
 const ChatInput = () => {
     const [name, setName] = React.useState('');
     let token: string | null, id: string | null, phone: string | null;
-    if(localStorage) {
+    if(typeof window !== 'undefined') {
         token = localStorage.getItem('Token');
         phone = localStorage.getItem('phone');
         id = localStorage.getItem('Id');

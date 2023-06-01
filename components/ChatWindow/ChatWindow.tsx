@@ -7,7 +7,7 @@ import styles from './ChatWindow.module.scss';
 const ChatWindow = () => {
     const [messages, setMessages] = useState<Message[]>([])
     let token: string | null, id: string | null, phone: string | null;
-    if(localStorage) {
+    if(typeof window !== 'undefined') {
         token = localStorage.getItem('Token');
         phone = localStorage.getItem('phone');
         id = localStorage.getItem('Id');
