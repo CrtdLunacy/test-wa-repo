@@ -19,11 +19,11 @@ const ChatWindow = () => {
             headers: {
                 'Content-Type': 'application/json',
             },
+            mode: 'no-cors',
             body: JSON.stringify({
                 chatId: `${phone}@c.us`,
                 count: 20
             }),
-            mode: 'no-cors'
         }).then((response) => response.json()).then((data) => {
             setMessages(data)
         });
