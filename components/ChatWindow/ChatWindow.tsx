@@ -4,16 +4,16 @@ import {useEffect, useState} from "react";
 import {Message} from "@/components/ChatWindow/types";
 import styles from './ChatWindow.module.scss';
 
+interface Storage {
+    id: string | null;
+    token: string | null;
+    phone: string | null
+}
+
 const ChatWindow = () => {
     const [messages, setMessages] = useState<Message[]>([])
-    let token: string | null, id: string | null, phone: string | null;
-    if(typeof window !== 'undefined') {
-        token = localStorage.getItem('Token');
-        phone = localStorage.getItem('phone');
-        id = localStorage.getItem('Id');
-    }
 
-    const fetchData = () => {
+    const fetchData = ({token, id, phone}: Storage) => {
         fetch(`https://api.green-api.com/waInstance${id}/getChatHistory/${token}`, {
             method: 'POST',
             headers: {
@@ -29,9 +29,12 @@ const ChatWindow = () => {
     }
 
     useEffect(() => {
-        fetchData();
+        const token = localStorage.getItem('Token');
+        const phone = localStorage.getItem('phone');
+        const id = localStorage.getItem('Id');
+        fetchData({token, id, phone});
         setInterval(fetchData, 36000);
-    }, [])
+    }, [fetchData])
 
     return (
         <div className={styles.chatWindow}>
