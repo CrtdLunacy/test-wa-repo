@@ -30,7 +30,6 @@ const ChatInput = () => {
                 count: 20
             }),
             mode: 'no-cors',
-            next: { revalidate: 60 }
         }).then((response) => response.json()).then((data) => {
             console.log(data)
         });
