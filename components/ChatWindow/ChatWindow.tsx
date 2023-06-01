@@ -23,6 +23,7 @@ const ChatWindow = () => {
                 chatId: `${phone}@c.us`,
                 count: 20
             }),
+            mode: 'no-cors'
         }).then((response) => response.json()).then((data) => {
             setMessages(data)
         });

@@ -29,6 +29,7 @@ const ChatInput = () => {
                 chatId: `${storage.phone}@c.us`,
                 count: 20
             }),
+            mode: 'no-cors',
             next: { revalidate: 60 }
         }).then((response) => response.json()).then((data) => {
             console.log(data)
@@ -41,6 +42,7 @@ const ChatInput = () => {
             headers: {
                 'Content-Type': 'application/json',
             },
+            mode: 'no-cors',
             body: JSON.stringify({
                 chatId: `${storage.phone}@c.us`,
                 message: name
