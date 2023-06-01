@@ -4,7 +4,7 @@ import {useEffect, useState} from "react";
 import {Message} from "@/components/ChatWindow/types";
 import styles from './ChatWindow.module.scss';
 
-interface Storage {
+export interface Storage {
     id: string | null;
     token: string | null;
     phone: string | null
@@ -33,14 +33,16 @@ const ChatWindow = () => {
         const phone = localStorage.getItem('phone');
         const id = localStorage.getItem('Id');
         fetchData({token, id, phone});
-        setInterval(fetchData, 36000);
-    }, [fetchData])
+        setInterval(() => {
+            fetchData({token, id, phone});
+        }, 36000);
+    }, [])
 
     return (
         <div className={styles.chatWindow}>
-            {messages.reverse().map(message => (
+            {messages.reverse().map((message, index) => (
                     <div
-                        key={message.idMessage}
+                        key={index}
                         className={
                             message.type === 'outgoing'
                             ?

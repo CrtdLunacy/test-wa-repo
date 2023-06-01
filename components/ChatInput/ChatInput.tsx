@@ -1,18 +1,18 @@
 'use client'
 
 import Input from "@/components/Input/Input";
-import React from "react";
+import React, {useEffect} from "react";
 import styles from './ChatInput.module.scss'
+import {Storage} from "@/components/ChatWindow/ChatWindow";
 
 
 
 const ChatInput = () => {
     const [name, setName] = React.useState('');
-    let token: string | null, id: string | null, phone: string | null;
-    if(typeof window !== 'undefined') {
-        token = localStorage.getItem('Token');
-        phone = localStorage.getItem('phone');
-        id = localStorage.getItem('Id');
+    const storage: Storage = {
+        id: '',
+        phone: '',
+        token: ''
     }
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -20,13 +20,13 @@ const ChatInput = () => {
     }
 
     const getPosts = async () => {
-        fetch(`https://api.green-api.com/waInstance${id}/getChatHistory/${token}`, {
+        fetch(`https://api.green-api.com/waInstance${storage.id}/getChatHistory/${storage.token}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                chatId: `${phone}@c.us`,
+                chatId: `${storage.phone}@c.us`,
                 count: 20
             }),
             next: { revalidate: 60 }
@@ -36,13 +36,13 @@ const ChatInput = () => {
     }
 
     const postMessage = async () => {
-        fetch(`https://api.green-api.com/waInstance${id}/sendMessage/${token}`, {
+        fetch(`https://api.green-api.com/waInstance${storage.id}/sendMessage/${storage.token}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                chatId: `${phone}@c.us`,
+                chatId: `${storage.phone}@c.us`,
                 message: name
             }),
         })
@@ -55,6 +55,12 @@ const ChatInput = () => {
         await postMessage();
         await getPosts();
     }
+
+    useEffect(() => {
+        storage.token = localStorage.getItem('Token');
+        storage.phone = localStorage.getItem('phone');
+        storage.id = localStorage.getItem('Id');
+    }, [])
 
     return (
         <div className={styles.chatInput}>
