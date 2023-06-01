@@ -6,9 +6,12 @@ import styles from './ChatWindow.module.scss';
 
 const ChatWindow = () => {
     const [messages, setMessages] = useState<Message[]>([])
-    const token = localStorage.getItem('Token');
-    const phone = localStorage.getItem('phone');
-    const id = localStorage.getItem('Id');
+    let token: string | null, id: string | null, phone: string | null;
+    if(localStorage) {
+        token = localStorage.getItem('Token');
+        phone = localStorage.getItem('phone');
+        id = localStorage.getItem('Id');
+    }
 
     const fetchData = () => {
         fetch(`https://api.green-api.com/waInstance${id}/getChatHistory/${token}`, {
@@ -22,7 +25,6 @@ const ChatWindow = () => {
             }),
         }).then((response) => response.json()).then((data) => {
             setMessages(data)
-            console.log(data);
         });
     }
 

@@ -8,9 +8,12 @@ import styles from './ChatInput.module.scss'
 
 const ChatInput = () => {
     const [name, setName] = React.useState('');
-    const id = localStorage.getItem('Id');
-    const token = localStorage.getItem('Token');
-    const phone = localStorage.getItem('phone');
+    let token: string | null, id: string | null, phone: string | null;
+    if(localStorage) {
+        token = localStorage.getItem('Token');
+        phone = localStorage.getItem('phone');
+        id = localStorage.getItem('Id');
+    }
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setName(event.target.value);
