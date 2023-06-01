@@ -3,30 +3,27 @@
 import Input from "@/components/Input/Input";
 import React, {useEffect} from "react";
 import styles from './ChatInput.module.scss'
-import {Storage} from "@/components/ChatWindow/ChatWindow";
 
 
 
 const ChatInput = () => {
     const [name, setName] = React.useState('');
-    const storage: Storage = {
-        id: '',
-        phone: '',
-        token: ''
-    }
-
+    const [id, setId] = React.useState<string | null>('');
+    const [phone, setPhone] = React.useState<string | null>('');
+    const [token, setToken] = React.useState<string | null>('');
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setName(event.target.value);
     }
 
     const getPosts = async () => {
-        fetch(`https://api.green-api.com/waInstance${storage.id}/getChatHistory/${storage.token}`, {
+        fetch(`https://api.green-api.com/waInstance${id}/getChatHistory/${token}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
+            // mode: "no-cors",
             body: JSON.stringify({
-                chatId: `${storage.phone}@c.us`,
+                chatId: `${phone}@c.us`,
                 count: 20
             }),
         }).then((response) => response.json()).then((data) => {
@@ -35,13 +32,14 @@ const ChatInput = () => {
     }
 
     const postMessage = async () => {
-        fetch(`https://api.green-api.com/waInstance${storage.id}/sendMessage/${storage.token}`, {
+        fetch(`https://api.green-api.com/waInstance${id}/sendMessage/${token}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
+            // mode: "no-cors",
             body: JSON.stringify({
-                chatId: `${storage.phone}@c.us`,
+                chatId: `${phone}@c.us`,
                 message: name
             }),
         })
@@ -56,9 +54,9 @@ const ChatInput = () => {
     }
 
     useEffect(() => {
-        storage.token = localStorage.getItem('Token');
-        storage.phone = localStorage.getItem('phone');
-        storage.id = localStorage.getItem('Id');
+        setToken(localStorage.getItem('Token'));
+        setId(localStorage.getItem('Id'));
+        setPhone(localStorage.getItem('phone'));
     }, [])
 
     return (

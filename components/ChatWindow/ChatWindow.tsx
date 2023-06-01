@@ -19,6 +19,7 @@ const ChatWindow = () => {
             headers: {
                 'Content-Type': 'application/json',
             },
+            // mode: "no-cors",
             body: JSON.stringify({
                 chatId: `${phone}@c.us`,
                 count: 20
