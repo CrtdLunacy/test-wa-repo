@@ -19,13 +19,13 @@ const ChatWindow = () => {
             headers: {
                 'Content-Type': 'application/json',
             },
-            mode: 'no-cors',
             body: JSON.stringify({
                 chatId: `${phone}@c.us`,
                 count: 20
             }),
         }).then((response) => response.json()).then((data) => {
             setMessages(data)
+            console.log(data)
         });
     }
 
@@ -34,9 +34,9 @@ const ChatWindow = () => {
         const phone = localStorage.getItem('phone');
         const id = localStorage.getItem('Id');
         fetchData({token, id, phone});
-        setInterval(() => {
-            fetchData({token, id, phone});
-        }, 36000);
+        // setInterval(() => {
+        //     fetchData({token, id, phone});
+        // }, 36000);
     }, [])
 
     return (
