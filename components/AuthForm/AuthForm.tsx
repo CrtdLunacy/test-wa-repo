@@ -8,7 +8,6 @@ const AuthForm = () => {
     const router = useRouter();
     return (
 
-
         <>
             <h1>Any place in your app!</h1>
             <Formik
@@ -30,8 +29,10 @@ const AuthForm = () => {
             >
                 {({ isSubmitting }) => (
                     <Form className={styles.form}>
+                        <div>Введите ID</div>
                         <Field type="text" name="Id" />
                         <ErrorMessage name="Id" component="div" />
+                        <div>Введите токен</div>
                         <Field type="text" name="Token" />
                         <ErrorMessage name="Token" component="div" />
                         <button type="submit" disabled={isSubmitting}>
