@@ -17,3 +17,9 @@ export interface Message {
     statusMessage: string;
     sendByApi: boolean;
 }
+
+export interface Storage {
+    id: string | null;
+    token: string | null;
+    phone: string | null
+}

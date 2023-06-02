@@ -23,7 +23,7 @@ const AuthForm = () => {
                             localStorage.setItem('Token', values.Token)
                             alert('Данные добавлены');
                             setSubmitting(false);
-                            router.push('/next');
+                            router.push('/phone');
                         }, 400);
                     }
                 }}
